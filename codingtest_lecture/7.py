@@ -28,21 +28,41 @@ def func1(cnt):
 
 # 2. 중복되는 조합 없애기
 # - 1 1 2와 1 2 1은 같은 것이라 보고 제거함
-def func2(cnt):
-    pass
+def func2(cnt, prev):
+    if cnt == N:
+        print(*path)
+        return
+    
+    # 이전 선택부터 고려
+    for num in range(prev, 7): 
+        path.append(num)
+        func2(cnt + 1, num) # 지금 선택을 다음으로 함께 전달
+        path.pop()
 
 # 3.  숫자 중복 없애기 (한 번이라도 해당 숫자가 선택된 적이 있으면 고르지 말기)
+# --> 선택된 숫자를 따로 관리 (visited 배열)
 def func3(cnt):
-    pass
-
+    if cnt == N:
+        print(*path)
+        return
+    
+    for num in range(1, 7): 
+        # 만약 num이 이전에 선택된 적이 있다면 continue
+        if visited[num]:
+            continue
+        visited[num] = 1 # 등장 체크
+        path.append(num)
+        func3(cnt + 1)
+        path.pop()
+        visited[num] = 0 # pop 했으니 등장 취소
 
 # N : 주사위 수 / M : 메뉴
 N, M= map(int, input().split())
 path = list()
-
+visited = [0] * 7 # 1~6번 주사위 숫자 등장 여부
 if M == 1:
     func1(0)
 elif M == 2:
-    func2(0)
+    func2(0, 1)
 elif M == 3:
     func3(0)
