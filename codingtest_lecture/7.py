@@ -50,7 +50,7 @@ def func3(cnt):
         # 만약 num이 이전에 선택된 적이 있다면 continue
         # 왜 for num in path 안 쓰고 visited를 쓸까?
         # -> "in"을 쓰면 전체 리스트를 한 번 통째로 탐색한다 - O(N). -> 성능이 저하된다.
-        if visited[num]:
+        if visited[num]: # O(1) : index 접근 1번만에 체크 완료
             continue
         visited[num] = 1 # 등장 체크
         path.append(num)
